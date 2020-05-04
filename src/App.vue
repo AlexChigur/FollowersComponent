@@ -23,6 +23,7 @@ export default class App extends Vue {
 <style scoped lang="sass">
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400&display=swap')
 .app
+  margin: 0 auto
   font-family: 'Rubik'
   font-size: 12px
   max-width: 246px

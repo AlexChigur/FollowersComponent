@@ -7,7 +7,9 @@
         | Followers
     .followers__main-block
       .followers__main-block__settings
-        followers-settings
+        followers-settings(
+          @selectedValue="selectedValue"
+        )
       .followers__main-block__count
         followers-count
     .followers__footer
@@ -15,19 +17,19 @@
         .followers__footer__description-block__text
           | Followers count is
       .followers__footer__value
-        followers-item(value="< 2000")
-
-
-
-
-
+        followers-item(
+          :text="text"
+          :is-editor="false"
+        )
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator"
 import FollowersSettings from "@/components/FollowersSettings.vue"
 import FollowersCount from "@/components/FollowersCount.vue"
-import FollowersItem from "@/components/FollowersItem.vue";
+import FollowersItem from "@/components/FollowersItem.vue"
+import { followers } from "@/helpers/mock"
+import { FollowersType } from "@/helpers/types"
 
 @Component({
   components: {
@@ -39,7 +41,18 @@ import FollowersItem from "@/components/FollowersItem.vue";
 
 export default class Followers extends Vue {
 
+  followers: FollowersType = followers
+  text = `< ${this.firstFollowerItem.condition.value}`
 
+  get firstFollowerItem () {
+    return this.followers.elements[0]
+  }
+
+  selectedValue (value: string) {
+     value == "Greater"
+      ? this.text = `< ${this.firstFollowerItem.condition.value}`
+      : this.text = `> ${this.firstFollowerItem.condition.value}`
+  }
 }
 
 </script>

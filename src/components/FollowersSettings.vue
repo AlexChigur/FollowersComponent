@@ -1,11 +1,13 @@
 <template lang="pug">
   .followers-settings
     .followers-settings__text
-      | Followers count is
+      | Followers count
     .followers-settings__dropdown
+      span.followers-settings__dropdown__article is
       dropdown(
-        text="Greater"
-        :values="arr"
+        :text="text"
+        :values="items"
+        @selectedValue="selectedValue"
       )
 </template>
 
@@ -20,8 +22,13 @@ import Dropdown from "@/components/Dropdown.vue";
 })
 
 export default class FollowersSettings extends Vue {
-  arr = ['less', 'greater']
+  items = ['Less', 'Greater']
+  text = 'Greater'
 
+  selectedValue (value: string) {
+    this.text = value
+    this.$emit('selectedValue', value)
+  }
 }
 
 </script>
@@ -36,5 +43,7 @@ export default class FollowersSettings extends Vue {
     display: flex
     &:after
       content: "than"
+    &__article
+      padding-right: 2px
 
 </style>

@@ -29,7 +29,7 @@ import { Component, Vue, Prop } from "vue-property-decorator"
 export default class Dropdown extends Vue {
 @Prop({ default: true }) icon: boolean
 @Prop({}) text: string
-@Prop({}) values: []
+@Prop({ default: () => ([]) }) values: []
 
   isDropdownVisible = false
 
@@ -38,8 +38,8 @@ export default class Dropdown extends Vue {
   }
 
   selectedValue (value: string) {
-    this.text = value
     this.isDropdownVisible = false
+    this.$emit('selectedValue', value)
   }
 
 
@@ -62,6 +62,8 @@ export default class Dropdown extends Vue {
 
   &__menu
     position: absolute
+    transition: transform .4s ease-in-out
+    transform-origin: top
 
     &__value
       background-color: white
@@ -76,12 +78,7 @@ export default class Dropdown extends Vue {
   transform: rotateX(180deg)
   transition: transform .3s
 
-.slide-enter-active
-  transition: opacity .3s ease
-
-
-
-
-
+.slide-enter, .slide-leave-to
+  transform: scaleY(0)
 
 </style>
